@@ -1,0 +1,23 @@
+import networkx
+import networkx as nx
+import random
+import matplotlib.pyplot as plt
+
+n = random.randint(1, 500)
+p = random.uniform(0, 1)
+n_c = random.randint(1, 100)
+p_random = random.uniform(0, 1)
+G_r = nx.erdos_renyi_graph(n, p, seed=None, directed=False)
+G_c = nx.complete_graph(n_c)
+pos_r = networkx.circular_layout(G_r)
+pos_c = networkx.circular_layout(G_c)
+
+complete_subgraph = G_c
+
+for node1 in G_r.nodes():
+   for node2 in G_r.nodes():
+         if node1 != node2 and G_r.has_edge(node1, node2):
+          complete_subgraph.add_edge(node1, node2)
+nx.draw(complete_subgraph,with_labels=True)
+plt.show()
+nx.write_gexf(complete_subgraph,"subgraph.gexf")
